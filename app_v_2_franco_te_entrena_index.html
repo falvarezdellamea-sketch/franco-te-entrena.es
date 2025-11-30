@@ -1,439 +1,137 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>franco te entrena · Seguimiento de Peso</title>
-  <meta name="description" content="Sistema intuitivo para seguimiento de peso corporal y composición, con gráficos, KPIs, reportes, %1RM y zonas de entrenamiento – franco te entrena" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Franco te entrena - Dashboard</title>
   <style>
-    :root{ --bg:#111827; --card:#1f2937; --muted:#9ca3af; --text:#e5e7eb; --accent:#facc15; --ok:#22c55e; --warn:#f59e0b; --danger:#ef4444; --shadow:0 10px 30px rgba(0,0,0,.35); --radius:18px; --fat:#fb7185; --muscle:#22d3ee; }
-    *{box-sizing:border-box} html,body{height:100%}
-    body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:var(--bg);color:var(--text)}
-    .wrap{max-width:1200px;margin:auto;padding:24px}
-    header{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:24px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#fff176);display:grid;place-items:center;color:#111;font-weight:900;box-shadow:var(--shadow)}
-    h1{margin:0;font-size:clamp(20px,3vw,28px);color:var(--accent)}
-    .subtitle{color:var(--muted);font-size:14px}
-    .grid{display:grid;gap:16px;grid-template-columns:1.1fr 1.2fr}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}}
-    .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px;position:relative}
-    .card h2{margin:0 0 8px;color:var(--accent);font-size:18px}
-    .section{display:flex;gap:16px;flex-wrap:wrap}
-    label{display:block;font-size:12px;color:var(--muted);margin-bottom:6px}
-    input,select,textarea{width:100%;padding:12px 12px;border-radius:12px;border:1px solid #374151;background:#0b1220;color:var(--text);outline:none}
-    input:focus,select:focus,textarea:focus{border-color:var(--accent)}
-    .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .btn{appearance:none;border:none;border-radius:14px;padding:12px 14px;background:var(--accent);color:#111;font-weight:700;cursor:pointer;box-shadow:var(--shadow)}
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .btn.secondary{background:#374151;color:var(--text)}
-    .btn.ghost{background:transparent;border:1px solid #374151;color:var(--text)}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap}
-    .kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-    @media (max-width:1200px){.kpis{grid-template-columns:repeat(3,1fr)}}
-    @media (max-width:700px){.kpis{grid-template-columns:repeat(2,1fr)}}
-    .kpi{background:#0b1220;border:1px solid #223047;border-radius:16px;padding:12px}
-    .kpi .label{font-size:12px;color:var(--muted)}
-    .kpi .value{font-weight:800;font-size:22px}
-    .kpi.good .value{color:var(--ok)} .kpi.warn .value{color:var(--warn)} .kpi.bad .value{color:var(--danger)}
-    table{width:100%;border-collapse:collapse} th,td{padding:10px;border-bottom:1px solid #223047;font-size:14px} th{color:var(--muted);font-weight:600;text-align:left}
-    tr:hover td{background:#0d1628}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;background:#0b1220;border:1px solid #223047;color:var(--muted);font-size:12px}
-    .muted{color:var(--muted)} .footer{margin-top:22px;color:var(--muted);font-size:12px;text-align:center}
-    .collapse{position:absolute;right:12px;top:12px;background:#0b1220;border:1px solid #223047;border-radius:10px;padding:4px 8px;font-size:12px;cursor:pointer;color:var(--muted)}
-    .collapsed .body{display:none}
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000000;
+      color: #ffffff;
+    }
+    header {
+      background-color: #FFD700;
+      color: black;
+      padding: 10px;
+      text-align: center;
+    }
+    .logo {
+      width: 80px;
+      margin-bottom: 5px;
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .container {
+      padding: 20px;
+    }
+    .section {
+      background-color: #1a1a1a;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+    }
+    label, input, select, button {
+      display: block;
+      margin: 8px 0;
+    }
+    input, select {
+      padding: 6px;
+      width: 100%;
+      max-width: 300px;
+    }
+    button {
+      background-color: #FFD700;
+      border: none;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    table {
+      margin-top: 15px;
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      border: 1px solid #333;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <header>
-      <div class="brand">
-        <div class="logo">FT</div>
-        <div>
-          <h1>franco te entrena</h1>
-          <div class="subtitle">Sistema intuitivo de seguimiento y evolución del peso</div>
-        </div>
-      </div>
-      <div class="toolbar">
-        <button class="btn" id="btnExport">Exportar CSV</button>
-        <button class="btn secondary" id="btnExportJSON">Exportar JSON</button>
-        <button class="btn secondary" id="btnTpl">Plantilla CSV</button>
-        <button class="btn ghost" id="btnReport">Reporte PDF</button>
-        <button class="btn ghost" id="btnMonthlyReport">Reporte mensual PDF</button>
-        <label class="btn ghost" for="fileImport" style="display:inline-flex;align-items:center;gap:8px;cursor:pointer;">Importar Excel/CSV <input type="file" id="fileImport" accept=".xlsx,.xls,.csv" style="display:none"></label>
-      </div>
-    </header>
 
-    <div class="grid">
-      <!-- CARD: Alumnos + Registro de peso/composición -->
-      <div class="card" id="card-reg">
-        <button class="collapse" data-card="card-reg">Colapsar</button>
-        <div class="body">
-          <h2>Alumnos</h2>
-          <div class="section">
-            <div style="flex:1;min-width:260px">
-              <label>Buscar alumno</label>
-              <input id="search" placeholder="Escribe un nombre…" />
-            </div>
-            <div style="flex:1;min-width:220px">
-              <label>Seleccionar</label>
-              <select id="studentSelect"></select>
-            </div>
-            <button class="btn" id="btnNewStudent">+ Nuevo alumno</button>
-          </div>
+  <header>
+    <img src="logo nuevo original.png" alt="Logo Franco Te Entrena" class="logo"/>
+    <h1>Franco te entrena</h1>
+    <p style="margin-top: 0;">Transforma tu vida</p>
+  </header>
 
-          <div class="section" id="studentForm" style="display:none;width:100%">
-            <div class="row">
-              <div>
-                <label>Nombre</label>
-                <input id="stName" placeholder="Ej: Ana Pérez" />
-              </div>
-              <div>
-                <label>Altura base (cm)</label>
-                <input id="stHeight" type="number" inputmode="decimal" placeholder="Ej: 170" />
-              </div>
-            </div>
-            <div class="row">
-              <div>
-                <label>Peso inicial (kg)</label>
-                <input id="stStart" type="number" inputmode="decimal" placeholder="Ej: 78" />
-              </div>
-              <div>
-                <label>Objetivo (kg)</label>
-                <input id="stTarget" type="number" inputmode="decimal" placeholder="Ej: 70" />
-              </div>
-            </div>
-            <div>
-              <label>Notas</label>
-              <textarea id="stNotes" rows="2" placeholder="Preferencias, lesiones, recordatorios…"></textarea>
-            </div>
-            <div class="section">
-              <button class="btn" id="btnSaveStudent">Guardar alumno</button>
-              <button class="btn secondary" id="btnCancelStudent">Cancelar</button>
-              <button class="btn ghost" id="btnDeleteStudent">Eliminar</button>
-            </div>
-          </div>
+  <div class="container">
 
-          <hr style="border:0;border-top:1px solid #223047;margin:18px 0">
-          <h2>Registro de peso y composición</h2>
-          <div class="row">
-            <div>
-              <label>Fecha</label>
-              <input id="logDate" type="date" />
-            </div>
-            <div>
-              <label>Peso (kg)</label>
-              <input id="logWeight" type="number" inputmode="decimal" placeholder="Ej: 75.2" />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label>% grasa</label>
-              <input id="logFat" type="number" inputmode="decimal" placeholder="Ej: 24.5" />
-            </div>
-            <div>
-              <label>% masa muscular</label>
-              <input id="logMuscle" type="number" inputmode="decimal" placeholder="Ej: 36.2" />
-            </div>
-          </div>
-          <div class="section">
-            <button class="btn" id="btnAddLog">Agregar registro</button>
-            <button class="btn secondary" id="btnDeleteLog">Eliminar seleccionado</button>
-          </div>
-
-          <div style="max-height:280px;overflow:auto;margin-top:10px">
-            <table id="logsTable">
-              <thead><tr><th>Fecha</th><th>Peso (kg)</th><th>% Grasa</th><th>% Músculo</th><th>Cambio</th><th></th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- CARD: Resumen + gráficos -->
-      <div class="card" id="card-res">
-        <button class="collapse" data-card="card-res">Colapsar</button>
-        <div class="body">
-          <h2>Resumen</h2>
-          <div class="section">
-            <div class="pill">Alumno: <span id="selectedName">—</span></div>
-            <div class="pill">Altura usada IMC: <span id="selectedHeight" class="muted">—</span> cm</div>
-            <div class="pill">Objetivo: <span id="selectedTarget" class="muted">—</span> kg</div>
-          </div>
-          <div class="kpis" style="margin-top:8px">
-            <div class="kpi"><div class="label">Peso actual</div><div class="value" id="kpiCurrent">—</div></div>
-            <div class="kpi"><div class="label">Cambio total</div><div class="value" id="kpiTotal">—</div></div>
-            <div class="kpi"><div class="label">Últimos 7 días</div><div class="value" id="kpi7">—</div></div>
-            <div class="kpi"><div class="label">IMC</div><div class="value" id="kpiBMI">—</div></div>
-            <div class="kpi"><div class="label">% grasa (act./7d)</div><div class="value" id="kpiFat">—</div></div>
-            <div class="kpi"><div class="label">% músculo (act./7d)</div><div class="value" id="kpiMus">—</div></div>
-          </div>
-          <div style="margin:16px 0"><canvas id="chart" height="130"></canvas></div>
-          <h2 style="margin-top:16px">Composición corporal</h2>
-          <div class="section"><div class="pill" style="border-color:var(--fat);color:var(--fat)">• % grasa</div><div class="pill" style="border-color:var(--muscle);color:var(--muscle)">• % músculo</div></div>
-          <div style="margin:10px 0"><canvas id="chartComp" height="130"></canvas></div>
-          <div class="row">
-            <div>
-              <label>Rango de fechas</label>
-              <div class="row">
-                <input id="fromDate" type="date">
-                <input id="toDate" type="date">
-              </div>
-            </div>
-            <div>
-              <label>&nbsp;</label>
-              <button class="btn" id="btnApplyRange">Aplicar</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- CARD: Altura (talla) -->
-      <div class="card" id="card-height">
-        <button class="collapse" data-card="card-height">Colapsar</button>
-        <div class="body">
-          <h2>Registro de altura (talla)</h2>
-          <div class="row">
-            <div>
-              <label>Fecha</label>
-              <input id="heightDate" type="date" />
-            </div>
-            <div>
-              <label>Altura (cm)</label>
-              <input id="heightVal" type="number" inputmode="decimal" placeholder="Ej: 170" />
-            </div>
-          </div>
-          <div class="section">
-            <button class="btn" id="btnAddHeight">Guardar altura</button>
-            <button class="btn secondary" id="btnDeleteHeight">Eliminar seleccionado</button>
-          </div>
-          <div style="max-height:220px;overflow:auto;margin-top:10px">
-            <table id="heightTable">
-              <thead><tr><th>Fecha</th><th>Altura (cm)</th><th>Usar para IMC</th><th></th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <div class="hint muted" style="margin-top:6px">La IMC usa la última altura registrada (si no hay registros, usa la altura base del alumno).</div>
-        </div>
-      </div>
-
-      <!-- CARD: Fuerza · %1RM y zonas de entrenamiento -->
-      <div class="card" id="card-strength">
-        <button class="collapse" data-card="card-strength">Colapsar</button>
-        <div class="body">
-          <h2>Fuerza · %1RM y zonas</h2>
-          <div class="row">
-            <div>
-              <label>Fecha</label>
-              <input id="stgDate" type="date" />
-            </div>
-            <div>
-              <label>Ejercicio</label>
-              <input id="stgExercise" placeholder="Ej: Sentadilla, Press banca…" />
-            </div>
-          </div>
-          <div class="row">
-            <div>
-              <label>Carga (kg)</label>
-              <input id="stgWeight" type="number" inputmode="decimal" placeholder="Ej: 85" />
-            </div>
-            <div>
-              <label>Reps</label>
-              <input id="stgReps" type="number" inputmode="numeric" placeholder="Ej: 5" />
-            </div>
-          </div>
-          <div class="section">
-            <button class="btn" id="btnAddStg">Agregar marca</button>
-            <button class="btn secondary" id="btnDeleteStg">Eliminar seleccionado</button>
-          </div>
-          <div style="max-height:220px;overflow:auto;margin-top:10px">
-            <table id="stgTable">
-              <thead><tr><th>Fecha</th><th>Ejercicio</th><th>Carga×Reps</th><th>1RM (Epley)</th><th></th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-          <hr style="border:0;border-top:1px solid #223047;margin:18px 0">
-          <div class="row">
-            <div>
-              <label>Zonas para ejercicio</label>
-              <select id="zonesExercise"></select>
-            </div>
-            <div>
-              <label>Último 1RM estimado</label>
-              <input id="zones1RM" disabled>
-            </div>
-          </div>
-          <div style="overflow:auto;margin-top:10px">
-            <table id="zonesTable">
-              <thead><tr><th>%</th><th>kg objetivo</th><th>RPE aprox.</th></tr></thead>
-              <tbody></tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
+    <!-- Registro de altura -->
+    <div class="section">
+      <h2>📏 Registro de altura</h2>
+      <label for="fechaAltura">Fecha:</label>
+      <input type="date" id="fechaAltura" />
+      <label for="altura">Altura (cm):</label>
+      <input type="number" id="altura" placeholder="Ej: 170" />
+      <button onclick="guardarAltura()">Guardar altura</button>
+      <table id="tablaAltura">
+        <tr><th>Fecha</th><th>Altura (cm)</th></tr>
+      </table>
     </div>
 
-    <div class="footer">© <span id="year"></span> franco te entrena · Títulos amarillos, fondo gris oscuro, subtítulos grises.</div>
+    <!-- Registro de fuerza -->
+    <div class="section">
+      <h2>🏋️‍♂️ Registro de fuerza</h2>
+      <label for="fechaFuerza">Fecha:</label>
+      <input type="date" id="fechaFuerza" />
+      <label for="ejercicio">Ejercicio:</label>
+      <input type="text" id="ejercicio" placeholder="Ej: Sentadilla" />
+      <label for="carga">Carga (kg):</label>
+      <input type="number" id="carga" />
+      <label for="reps">Repeticiones:</label>
+      <input type="number" id="reps" />
+      <button onclick="guardarFuerza()">Guardar fuerza</button>
+      <table id="tablaFuerza">
+        <tr><th>Fecha</th><th>Ejercicio</th><th>Carga</th><th>Reps</th><th>1RM (Epley)</th></tr>
+      </table>
+    </div>
   </div>
 
-<script>
-  const BRAND_NAME = 'franco te entrena';
-  const $ = (s)=>document.querySelector(s); const $$=(s)=>Array.from(document.querySelectorAll(s));
-  const fmt=(n,d=1)=>(n===null||Number.isNaN(n))?'—':Number(n).toFixed(d).replace('.', ',');
-  const toISODate=d=>new Date(d).toISOString().slice(0,10);
-  // —— Persistencia ——
-  const LS_STUDENTS='fte_students_v1'; const LS_LOGS='fte_logs_v2';
-  const LS_HEIGHTS='fte_heights_v1'; const LS_STR='fte_strength_v1';
-  const LS_UI='fte_ui_v1';
-  let students=JSON.parse(localStorage.getItem(LS_STUDENTS)||'[]');
-  let logs=JSON.parse(localStorage.getItem(LS_LOGS)||'{}');
-  let heights=JSON.parse(localStorage.getItem(LS_HEIGHTS)||'{}'); // {id:[{date,height}]}
-  let strength=JSON.parse(localStorage.getItem(LS_STR)||'{}'); // {id:[{date,exercise,weight,reps,epley}]}
-  let ui=JSON.parse(localStorage.getItem(LS_UI)||'{}'); // {fromDate,toDate,collapsed:{}}
-  let selectedId=students[0]?.id||null; let chart, chartComp;
+  <script>
+    const tablaAltura = document.getElementById("tablaAltura");
+    const tablaFuerza = document.getElementById("tablaFuerza");
 
-  function persist(){ localStorage.setItem(LS_STUDENTS,JSON.stringify(students)); localStorage.setItem(LS_LOGS,JSON.stringify(logs)); localStorage.setItem(LS_HEIGHTS,JSON.stringify(heights)); localStorage.setItem(LS_STR,JSON.stringify(strength)); localStorage.setItem(LS_UI,JSON.stringify(ui)); }
+    function guardarAltura() {
+      const fecha = document.getElementById("fechaAltura").value;
+      const altura = document.getElementById("altura").value;
+      if (!fecha || !altura) return alert("Completa ambos campos");
+      const fila = tablaAltura.insertRow();
+      fila.innerHTML = `<td>${fecha}</td><td>${altura}</td>`;
+      document.getElementById("fechaAltura").value = '';
+      document.getElementById("altura").value = '';
+    }
 
-  function init(){
-    $('#year').textContent=new Date().getFullYear();
-    const today=toISODate(new Date());
-    $('#logDate').value=today; $('#heightDate').value=today; $('#stgDate').value=today;
-    if(ui.fromDate) $('#fromDate').value=ui.fromDate; if(ui.toDate) $('#toDate').value=ui.toDate;
-    restoreCollapsed();
-    fillStudentSelect(); bindUI(); seedIfEmpty(); renderAll(); applyStudentMode();
-  }
+    function guardarFuerza() {
+      const fecha = document.getElementById("fechaFuerza").value;
+      const ejercicio = document.getElementById("ejercicio").value;
+      const carga = parseFloat(document.getElementById("carga").value);
+      const reps = parseInt(document.getElementById("reps").value);
+      if (!fecha || !ejercicio || isNaN(carga) || isNaN(reps)) return alert("Completa todos los campos");
+      const epley = Math.round(carga * (1 + reps / 30));
+      const fila = tablaFuerza.insertRow();
+      fila.innerHTML = `<td>${fecha}</td><td>${ejercicio}</td><td>${carga}</td><td>${reps}</td><td>${epley}</td>`;
+      document.getElementById("fechaFuerza").value = '';
+      document.getElementById("ejercicio").value = '';
+      document.getElementById("carga").value = '';
+      document.getElementById("reps").value = '';
+    }
+  </script>
 
-  function bindUI(){
-    // Collapse
-    $$('.collapse').forEach(b=> b.onclick=()=>toggleCard(b.dataset.card));
-
-    // Alumno
-    $('#btnNewStudent').onclick=()=>{$('#studentForm').style.display='block';clearForm()}; $('#btnCancelStudent').onclick=()=>{$('#studentForm').style.display='none'}; $('#btnSaveStudent').onclick=saveStudent; $('#btnDeleteStudent').onclick=deleteStudent; $('#studentSelect').onchange=e=>{selectedId=e.target.value||null; renderAll()}; $('#search').oninput=filterSelect;
-
-    // Peso/comp
-    $('#btnAddLog').onclick=addLog; $('#btnDeleteLog').onclick=deleteSelectedLog; $('#btnApplyRange').onclick=()=>{ ui.fromDate=$('#fromDate').value||null; ui.toDate=$('#toDate').value||null; persist(); renderChart(); renderCompChart(); };
-
-    // Export/Import/Reportes
-    $('#btnExport').onclick=exportCSV; $('#btnExportJSON').onclick=exportJSON; $('#btnTpl').onclick=downloadTemplate; $('#btnReport').onclick=downloadReport; $('#btnMonthlyReport').onclick=downloadMonthlyPDF; $('#fileImport').addEventListener('change', importFile);
-
-    // Altura
-    $('#btnAddHeight').onclick=addHeight; $('#btnDeleteHeight').onclick=deleteSelectedHeight;
-
-    // Fuerza
-    $('#btnAddStg').onclick=addStg; $('#btnDeleteStg').onclick=deleteSelectedStg; $('#zonesExercise').onchange=renderZones;
-  }
-
-  function toggleCard(id){ const card=document.getElementById(id); card.classList.toggle('collapsed'); ui.collapsed=ui.collapsed||{}; ui.collapsed[id]=card.classList.contains('collapsed'); persist(); }
-  function restoreCollapsed(){ ui.collapsed=ui.collapsed||{}; Object.entries(ui.collapsed).forEach(([id,val])=>{ const c=document.getElementById(id); if(c && val) c.classList.add('collapsed'); }); }
-
-  // —— Utilidades ——
-  function uid(){return's_'+Math.random().toString(36).slice(2,9)}
-  function clearForm(){ $('#stName').value='';$('#stHeight').value='';$('#stStart').value='';$('#stTarget').value='';$('#stNotes').value=''; }
-  function fillStudentSelect(){ const sel=$('#studentSelect'); sel.innerHTML=''; students.forEach(st=>{const o=document.createElement('option');o.value=st.id;o.textContent=st.name;sel.appendChild(o)}); if(students.length){ sel.value=selectedId||students[0].id; selectedId=sel.value; } else selectedId=null; }
-  function filterSelect(){ const q=$('#search').value.trim().toLowerCase(); const sel=$('#studentSelect'); sel.innerHTML=''; students.filter(s=>s.name.toLowerCase().includes(q)).forEach(st=>{ const o=document.createElement('option'); o.value=st.id; o.textContent=st.name; sel.appendChild(o); }); if(sel.options.length) sel.value=sel.options[0].value; selectedId=sel.value||null; renderAll(); }
-
-  // —— CRUD alumnos ——
-  function saveStudent(){ const name=$('#stName').value.trim(); if(!name) return alert('Añade un nombre'); const height=Number($('#stHeight').value)||null; const start=Number($('#stStart').value)||null; const target=Number($('#stTarget').value)||null; const notes=$('#stNotes').value.trim(); const ex=students.find(s=>s.name.toLowerCase()===name.toLowerCase()); if(ex){ ex.height=height; ex.start=start; ex.target=target; ex.notes=notes; selectedId=ex.id; } else { const id=uid(); const st={id,name,height,start,target,notes}; students.push(st); logs[id]=[]; heights[id]=heights[id]||[]; strength[id]=strength[id]||[]; selectedId=id; if(start){ logs[id].push({date:toISODate(new Date()), weight:start}); } } persist(); fillStudentSelect(); $('#studentForm').style.display='none'; renderAll(); }
-  function deleteStudent(){ if(!selectedId) return; const st=students.find(s=>s.id===selectedId); if(!st) return; if(!confirm(`¿Eliminar a ${st.name} y todos sus registros?`)) return; students=students.filter(s=>s.id!==selectedId); delete logs[selectedId]; delete heights[selectedId]; delete strength[selectedId]; selectedId=students[0]?.id||null; persist(); fillStudentSelect(); renderAll(); }
-
-  // —— Peso/comp ——
-  function addLog(){ if(!selectedId) return alert('Primero crea o selecciona un alumno'); const date=$('#logDate').value; const w=Number($('#logWeight').value); const fat=$('#logFat').value?Number($('#logFat').value):null; const muscle=$('#logMuscle').value?Number($('#logMuscle').value):null; if(!date||!w) return alert('Completa fecha y peso'); const arr=logs[selectedId]||(logs[selectedId]=[]); const ix=arr.findIndex(x=>x.date===date); if(ix>=0) arr[ix]={...arr[ix],weight:w,fat,muscle}; else arr.push({date,weight:w,fat,muscle}); arr.sort((a,b)=>a.date.localeCompare(b.date)); persist(); renderAll(); }
-  function deleteSelectedLog(){ if(!selectedId) return; const rows=$$('#logsTable tbody tr'); const sel=rows.filter(r=>r.querySelector('input[type="checkbox"]').checked); if(!sel.length) return alert('Selecciona al menos un registro'); const dates=new Set(sel.map(r=>r.dataset.date)); logs[selectedId]=(logs[selectedId]||[]).filter(x=>!dates.has(x.date)); persist(); renderAll(); }
-
-  // —— Altura ——
-  function addHeight(){ if(!selectedId) return alert('Primero crea o selecciona un alumno'); const date=$('#heightDate').value; const h=Number($('#heightVal').value); if(!date||!h) return alert('Completa fecha y altura'); const arr=heights[selectedId]||(heights[selectedId]=[]); const ix=arr.findIndex(x=>x.date===date); if(ix>=0) arr[ix]={...arr[ix],height:h}; else arr.push({date,height:h}); arr.sort((a,b)=>a.date.localeCompare(b.date)); // usar última altura como base
-    const st=students.find(s=>s.id===selectedId); if(st){ st.height=arr[arr.length-1].height; }
-    persist(); renderAll(); }
-  function deleteSelectedHeight(){ if(!selectedId) return; const rows=$$('#heightTable tbody tr'); const sel=rows.filter(r=>r.querySelector('input[type="checkbox"]').checked); if(!sel.length) return alert('Selecciona al menos un registro'); const dates=new Set(sel.map(r=>r.dataset.date)); heights[selectedId]=(heights[selectedId]||[]).filter(x=>!dates.has(x.date)); // actualizar altura base si se borra la última
-    const arr=heights[selectedId]||[]; const st=students.find(s=>s.id===selectedId); if(st){ st.height=arr.length?arr[arr.length-1].height:st.height; }
-    persist(); renderAll(); }
-
-  // —— Fuerza ——
-  const epley=(w,r)=> w*(1 + (r/30));
-  function addStg(){ if(!selectedId) return alert('Primero crea o selecciona un alumno'); const date=$('#stgDate').value; const ex=($('#stgExercise').value||'').trim(); const w=Number($('#stgWeight').value); const reps=Number($('#stgReps').value); if(!date||!ex||!w||!reps) return alert('Completa fecha, ejercicio, carga y reps'); const arr=strength[selectedId]||(strength[selectedId]=[]); const rec={date,exercise:ex,weight:w,reps:reps,epley:Math.round(epley(w,reps)*10)/10}; arr.push(rec); arr.sort((a,b)=>a.date.localeCompare(b.date)); persist(); renderAll(); $('#stgExercise').value=''; $('#stgWeight').value=''; $('#stgReps').value=''; }
-  function deleteSelectedStg(){ if(!selectedId) return; const rows=$$('#stgTable tbody tr'); const sel=rows.filter(r=>r.querySelector('input[type="checkbox"]').checked); if(!sel.length) return alert('Selecciona al menos un registro'); const keys=new Set(sel.map(r=>r.dataset.key)); strength[selectedId]=(strength[selectedId]||[]).filter(x=>!keys.has(keyForStg(x))); persist(); renderAll(); }
-  function keyForStg(x){ return `${x.date}|${x.exercise}|${x.weight}|${x.reps}`; }
-
-  // —— Exportación ——
-  function exportCSV(){ const lines=['Alumno,Fecha,Peso,%Grasa,%Músculo,Altura_cm,Objetivo_kg,Notas']; students.forEach(st=>{ const arr=logs[st.id]||[]; if(!arr.length) lines.push(`${q(st.name)},,,, ,${st.height||''},${st.target||''},${q(st.notes||'')}`); arr.forEach(l=>{ lines.push(`${q(st.name)},${l.date},${l.weight??''},${l.fat??''},${l.muscle??''},${st.height||''},${st.target||''},${q(st.notes||'')}`) }); }); download('fte_datos.csv', lines.join('\n')); }
-  function exportJSON(){ download('fte_datos.json', JSON.stringify({students,logs,heights,strength},null,2)); }
-  function downloadTemplate(){ download('plantilla_francteentrena.csv', ['Alumno,Fecha,Peso,%Grasa,%Músculo,Altura,Objetivo,Notas','Ejemplo Alumno,2025-01-10,78,24.5,36.2,170,70,Inicio del plan'].join('\n')); }
-  function q(s){return '"'+String(s).replaceAll('"','""')+'"'}
-  function download(n,c){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([c],{type:'text/plain;charset=utf-8'})); a.download=n; a.click(); URL.revokeObjectURL(a.href); }
-
-  // —— Importación (Excel/CSV) ——
-  async function importFile(evt){ const f=evt.target.files[0]; if(!f) return; const data=await f.arrayBuffer(); const wb=XLSX.read(data,{type:'array'}); const ws=wb.Sheets[wb.SheetNames[0]]; const rows=XLSX.utils.sheet_to_json(ws,{raw:true}); const map=(row,...keys)=>keys.find(k=>k in row);
-    rows.forEach(r=>{ const nameKey=map(r,'Alumno','Name','NOMBRE','nombre'); const dateKey=map(r,'Fecha','Date','FECHA','date'); const weightKey=map(r,'Peso','Weight','PESO','weight'); const heightKey=map(r,'Altura','Height','ALTURA'); const targetKey=map(r,'Objetivo','Target','OBJETIVO'); const notesKey=map(r,'Notas','Notes','NOTAS'); const fatKey=map(r,'%Grasa','Grasa','Body fat','Fat','% fat','BF'); const muscleKey=map(r,'%Músculo','%Musculo','Músculo','Musculo','Muscle','Skeletal muscle'); const name=nameKey?String(r[nameKey]).trim():null; if(!name) return; let st=students.find(s=>s.name.toLowerCase()===name.toLowerCase()); if(!st){ st={id:uid(), name, height:null,start:null,target:null,notes:''}; students.push(st); logs[st.id]=[]; heights[st.id]=[]; strength[st.id]=[]; }
-      if(heightKey && r[heightKey]){ const hv=Number(r[heightKey]); st.height=hv; heights[st.id].push({date: normalizeDate(r[dateKey]) || toISODate(new Date()), height: hv}); }
-      if(targetKey && r[targetKey]) st.target=Number(r[targetKey])||st.target; if(notesKey && r[notesKey]) st.notes=String(r[notesKey]);
-      if(dateKey && weightKey && r[weightKey]){ const date=normalizeDate(r[dateKey]); const weight=Number(r[weightKey]); const fat=fatKey&&r[fatKey]!=null?Number(r[fatKey]):null; const muscle=muscleKey&&r[muscleKey]!=null?Number(r[muscleKey]):null; if(date&&weight){ const arr=logs[st.id]; const ix=arr.findIndex(x=>x.date===date); const entry={date,weight,fat,muscle}; if(ix>=0) arr[ix]={...arr[ix],...entry}; else arr.push(entry); } }
-    });
-    students.forEach(st=>{ const arr=(logs[st.id]||[]).sort((a,b)=>a.date.localeCompare(b.date)); if(arr.length && st.start==null) st.start=arr[0].weight; heights[st.id]=(heights[st.id]||[]).sort((a,b)=>a.date.localeCompare(b.date)); });
-    persist(); fillStudentSelect(); renderAll(); alert('Importación completada ✅'); evt.target.value=''; }
-  function normalizeDate(v){ if(!v) return null; if(v instanceof Date) return toISODate(v); if(typeof v==='number'){ const d=new Date(Math.round((v-25569)*86400*1000)); return toISODate(d); } const s=String(v); const iso=/^\d{4}-\d{2}-\d{2}$/; if(iso.test(s)) return s; const dmy=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/); if(dmy){ const[_,d,m,y]=dmy; return `${y.length===2?('20'+y):y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } const mdy=s.match(/^(\d{1,2})[\/\-.](\d{1,2})[\/\-.](\d{2,4})$/); if(mdy){ const[_,m,d,y]=mdy; return `${y.length===2?('20'+y):y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; } return null; }
-
-  // —— Render ——
-  function renderAll(){ fillStudentSelect(); renderHeader(); renderTable(); renderChart(); renderCompChart(); renderHeightTable(); renderStrengthTable(); renderZones(); }
-  function getSelected(){ return students.find(s=>s.id===selectedId)||null }
-  function latestHeight(){ const arr=heights[selectedId]||[]; return arr.length? arr[arr.length-1].height : (getSelected()?.height ?? null); }
-
-  function renderHeader(){ const st=getSelected(); $('#selectedName').textContent=st?st.name:'—'; const hUsed=latestHeight(); $('#selectedHeight').textContent=hUsed??'—'; $('#selectedTarget').textContent=st?.target??'—'; const arr=(st&&logs[st.id])?[...logs[st.id]]:[]; arr.sort((a,b)=>a.date.localeCompare(b.date)); const current=arr.length?arr[arr.length-1].weight:null; const start=st?.start ?? (arr[0]?.weight ?? null); const total=(current!=null&&start!=null)? current-start : null; const last7=changeInDays(arr,7); const bmi=(hUsed&&current)? (current/Math.pow(hUsed/100,2)) : null; $('#kpiCurrent').textContent=fmt(current,1); $('#kpiTotal').textContent=(total!=null?(total>0?'+':'')+fmt(total,1)+' kg':'—'); $('#kpi7').textContent=(last7!=null?(last7>0?'+':'')+fmt(last7,1)+' kg':'—'); $('#kpiBMI').textContent=bmi?fmt(bmi,1):'—'; setKpiColor('#kpiTotal', total); setKpiColor('#kpi7', last7); const fat=deltaProp(arr,7,'fat'); const mus=deltaProp(arr,7,'muscle'); setKpiComp('kpiFat',fat); setKpiComp('kpiMus',mus); }
-  function setKpiColor(sel,val){ const el=$(sel).closest('.kpi'); el.classList.remove('good','warn','bad'); if(val==null) return; if(val<-0.1) el.classList.add('good'); else if(val<=0.1) el.classList.add('warn'); else el.classList.add('bad'); }
-  function changeInDays(arr,days){ if(!arr.length) return null; const to=new Date(arr[arr.length-1].date); const from=new Date(to); from.setDate(from.getDate()-days); const before=arr.filter(x=>new Date(x.date)<=to && new Date(x.date)>=from); if(before.length<2) return null; return before[before.length-1].weight - before[0].weight; }
-  function deltaProp(arr,days,prop){ if(!arr.length) return {curr:null,chg:null}; const curr=(arr[arr.length-1][prop]??null); const to=new Date(arr[arr.length-1].date); const from=new Date(to); from.setDate(from.getDate()-days); const within=arr.filter(x=>new Date(x.date)<=to && new Date(x.date)>=from && x[prop]!=null); const chg=within.length>=2?(within[within.length-1][prop]-within[0][prop]):null; return {curr,chg}; }
-  function setKpiComp(id,obj){ const el=document.getElementById(id); if(!el) return; el.textContent=(obj.curr==null?'—':`${obj.curr.toFixed(1).replace('.',',')}%`)+(obj.chg==null?'':` (${obj.chg>0?'+':''}${obj.chg.toFixed(1).replace('.',',')}%)`); }
-
-  function renderTable(){ const tbody=$('#logsTable tbody'); tbody.innerHTML=''; const st=getSelected(); const arr=(st&&logs[st.id])?[...logs[st.id]]:[]; arr.sort((a,b)=>a.date.localeCompare(b.date)); let prev=null; arr.forEach(x=>{ const tr=document.createElement('tr'); tr.dataset.date=x.date; const diff=prev?(x.weight-prev.weight):null; prev=x; tr.innerHTML=`<td>${x.date}</td><td>${fmt(x.weight,1)}</td><td>${x.fat==null?'—':fmt(x.fat,1)+' %'}</td><td>${x.muscle==null?'—':fmt(x.muscle,1)+' %'}</td><td>${diff==null?'—':(diff>0?'+':'')+fmt(diff,1)+' kg'}</td><td><input type='checkbox'></td>`; tbody.appendChild(tr); }); }
-
-  function renderChart(){ const st=getSelected(); const arr=(st&&logs[st.id])?[...logs[st.id]]:[]; arr.sort((a,b)=>a.date.localeCompare(b.date)); const from=$('#fromDate').value?new Date($('#fromDate').value):null; const to=$('#toDate').value?new Date($('#toDate').value):null; const filtered=arr.filter(p=>{ const d=new Date(p.date); return (!from||d>=from)&&(!to||d<=to); }); const labels=filtered.map(x=>x.date); const weights=filtered.map(x=>x.weight); const ctx=document.getElementById('chart'); if(chart) chart.destroy(); chart=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'Peso (kg)',data:weights,borderColor:'#facc15',backgroundColor:'rgba(250,204,21,.12)',tension:.3,fill:true,pointRadius:3},...(st?.target?[{label:'Objetivo',data:labels.map(()=>st.target),borderDash:[6,6],borderColor:'#9ca3af',pointRadius:0}]:[])]},options:{plugins:{legend:{labels:{color:'#e5e7eb'}}},scales:{x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.06)'}}}}}); }
-
-  function renderCompChart(){ const st=getSelected(); const arr=(st&&logs[st.id])?[...logs[st.id]]:[]; arr.sort((a,b)=>a.date.localeCompare(b.date)); const from=$('#fromDate').value?new Date($('#fromDate').value):null; const to=$('#toDate').value?new Date($('#toDate').value):null; const filtered=arr.filter(p=>{ const d=new Date(p.date); return (!from||d>=from)&&(!to||d<=to); }); const labels=filtered.map(x=>x.date); const fat=filtered.map(x=>x.fat); const muscle=filtered.map(x=>x.muscle); const ctx=document.getElementById('chartComp'); if(chartComp) chartComp.destroy(); chartComp=new Chart(ctx,{type:'line',data:{labels,datasets:[{label:'% grasa',data:fat,borderColor:getComputedStyle(document.documentElement).getPropertyValue('--fat').trim(),backgroundColor:'rgba(251,113,133,.12)',tension:.3,pointRadius:3,spanGaps:true},{label:'% músculo',data:muscle,borderColor:getComputedStyle(document.documentElement).getPropertyValue('--muscle').trim(),backgroundColor:'rgba(34,211,238,.12)',tension:.3,pointRadius:3,spanGaps:true}]},options:{plugins:{legend:{labels:{color:'#e5e7eb'}}},scales:{x:{ticks:{color:'#9ca3af'},grid:{color:'rgba(255,255,255,.06)'}},y:{ticks:{color:'#9ca3af',callback:v=>v+'%'},grid:{color:'rgba(255,255,255,.06)'},suggestedMin:0,suggestedMax:50}}}); }
-
-  function renderHeightTable(){ const tbody=$('#heightTable tbody'); if(!tbody) return; tbody.innerHTML=''; const arr=(heights[selectedId]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date)); arr.forEach(x=>{ const tr=document.createElement('tr'); tr.dataset.date=x.date; tr.innerHTML=`<td>${x.date}</td><td>${fmt(x.height,1)}</td><td><button class='btn secondary btnUseH' data-date='${x.date}'>Usar</button></td><td><input type='checkbox'></td>`; tbody.appendChild(tr); }); $$('.btnUseH').forEach(b=> b.onclick=()=>{ const st=getSelected(); if(!st) return; const rec=(heights[selectedId]||[]).find(r=>r.date===b.dataset.date); if(rec){ st.height=rec.height; persist(); renderAll(); }}); }
-
-  function renderStrengthTable(){ const tbody=$('#stgTable tbody'); if(!tbody) return; tbody.innerHTML=''; const arr=(strength[selectedId]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date)); arr.forEach(x=>{ const tr=document.createElement('tr'); tr.dataset.key=keyForStg(x); tr.innerHTML=`<td>${x.date}</td><td>${x.exercise}</td><td>${fmt(x.weight,1)}×${x.reps}</td><td>${fmt(x.epley,1)}</td><td><input type='checkbox'></td>`; tbody.appendChild(tr); });
-    // llenar selector de zonas
-    const exSet=[...new Set((strength[selectedId]||[]).map(x=>x.exercise))]; const sel=$('#zonesExercise'); sel.innerHTML=''; exSet.forEach(ex=>{ const o=document.createElement('option'); o.value=ex; o.textContent=ex; sel.appendChild(o); }); }
-
-  function renderZones(){ const sel=$('#zonesExercise'); if(!sel) return; const ex=sel.value; const arr=(strength[selectedId]||[]).filter(x=>x.exercise===ex); const last=arr.length?arr[arr.length-1]:null; const oneRM=last?last.epley:null; $('#zones1RM').value=oneRM?fmt(oneRM,1)+' kg':'—'; const tbody=$('#zonesTable tbody'); tbody.innerHTML=''; const perc=[50,60,70,80,85,90,95]; const rpeMap={50:'5-6',60:'6-7',70:'7-8',80:'8-9',85:'9',90:'9.5',95:'9.5-10'}; perc.forEach(p=>{ const kg = oneRM? Math.round((oneRM*p/100)*2)/2 : null; const tr=document.createElement('tr'); tr.innerHTML=`<td>${p}%</td><td>${kg?kg.toFixed(1).replace('.',','): '—'}</td><td>${rpeMap[p]}</td>`; tbody.appendChild(tr); }); }
-
-  // —— Reportes ——
-  function downloadReport(){ const st=getSelected(); if(!st) return alert('No hay alumno seleccionado'); const arr=(logs[st.id]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date)); const chartImg=chart?.toBase64Image()||''; const compImg=chartComp?.toBase64Image()||''; const hs=(heights[st.id]||[]).slice(-5); const sg=(strength[st.id]||[]).slice(-5);
-    const zonesHTML=(function(){ const exSel=$('#zonesExercise')?.value; const arr=(strength[st.id]||[]).filter(x=>x.exercise===exSel); const last=arr.length?arr[arr.length-1]:null; const oneRM=last?last.epley:null; if(!oneRM) return ''; const rows=[50,60,70,80,85,90,95].map(p=>{ const kg=Math.round((oneRM*p/100)*2)/2; return `<tr><td>${p}%</td><td>${kg.toFixed(1)}</td></tr>`; }).join(''); return `<h3>Zonas (${exSel})</h3><table><thead><tr><th>%</th><th>kg</th></tr></thead><tbody>${rows}</tbody></table>`; })();
-    const html=`<!doctype html><html><head><meta charset='utf-8'><title>Reporte ${st.name}</title><style>body{font-family:Inter,Arial,sans-serif;padding:20px;color:#111} h1{margin:0 0 6px} .muted{color:#555} table{width:100%;border-collapse:collapse;margin-top:12px} th,td{border:1px solid #ddd;padding:8px;font-size:12px} th{background:#f3f4f6;text-align:left} .k{display:flex;gap:12px;margin:10px 0} .pill{padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px} @media print{.no-print{display:none}}</style></head><body>
-      <h1>${BRAND_NAME} — Reporte</h1>
-      <div class='muted'>Alumno: <b>${st.name}</b></div>
-      <div class='k'><div class='pill'>Altura usada IMC: ${latestHeight()??'—'} cm</div><div class='pill'>Objetivo: ${st.target??'—'} kg</div></div>
-      <h3>Evolución de peso</h3>${chartImg?`<img src='${chartImg}' style='max-width:100%'>`:''}
-      <h3>Composición corporal</h3>${compImg?`<img src='${compImg}' style='max-width:100%'>`:''}
-      <h3>Registros</h3>
-      <table><thead><tr><th>Fecha</th><th>Peso</th><th>% Grasa</th><th>% Músculo</th></tr></thead><tbody>
-      ${arr.map(x=>`<tr><td>${x.date}</td><td>${x.weight??''}</td><td>${x.fat??''}</td><td>${x.muscle??''}</td></tr>`).join('')}
-      </tbody></table>
-      <h3>Altura (últimos)</h3>
-      <table><thead><tr><th>Fecha</th><th>Altura (cm)</th></tr></thead><tbody>${hs.map(h=>`<tr><td>${h.date}</td><td>${h.height}</td></tr>`).join('')}</tbody></table>
-      <h3>Fuerza · 1RM (últimos)</h3>
-      <table><thead><tr><th>Fecha</th><th>Ejercicio</th><th>Carga×Reps</th><th>1RM (Epley)</th></tr></thead><tbody>${sg.map(s=>`<tr><td>${s.date}</td><td>${s.exercise}</td><td>${s.weight}×${s.reps}</td><td>${s.epley}</td></tr>`).join('')}</tbody></table>
-      ${zonesHTML}
-      <p class='muted'>Generado automáticamente — ${BRAND_NAME}</p>
-      <button class='no-print' onclick='window.print()'>Imprimir/Guardar PDF</button>
-      </body></html>`; const w=window.open('', '_blank'); w.document.write(html); w.document.close(); }
-
-  function groupMonthly(arr){ const map=new Map(); arr.forEach(x=>{ const dt=new Date(x.date); const k=dt.getFullYear()+'-'+String(dt.getMonth()+1).padStart(2,'0'); if(!map.has(k)) map.set(k,[]); map.get(k).push(x); }); const rows=[]; Array.from(map.keys()).sort().forEach(k=>{ const xs=map.get(k).sort((a,b)=>a.date.localeCompare(b.date)); const avg=p=>{ const v=xs.map(v=>v[p]).filter(v=>v!=null); return v.length? v.reduce((a,b)=>a+b,0)/v.length : null; }; const start=xs[0]?.weight??null; const end=xs[xs.length-1]?.weight??null; const change=(start!=null&&end!=null)? end-start : null; rows.push({month:k,avgWeight:avg('weight'),avgFat:avg('fat'),avgMuscle:avg('muscle'),start,end,change}); }); return rows; }
-  async function downloadMonthlyPDF(){ const st=getSelected(); if(!st) return alert('No hay alumno seleccionado'); const arr=(logs[st.id]||[]).slice().sort((a,b)=>a.date.localeCompare(b.date)); if(!arr.length) return alert('No hay registros para generar el reporte mensual'); const monthly=groupMonthly(arr); const cvs=document.createElement('canvas'); cvs.width=900; cvs.height=320; document.body.appendChild(cvs); cvs.style.position='fixed'; cvs.style.left='-9999px'; const labels=monthly.map(r=>r.month); const data=monthly.map(r=>r.avgWeight); const ch=new Chart(cvs,{type:'bar',data:{labels,datasets:[{label:'Peso medio (kg)',data,backgroundColor:'rgba(250,204,21,.6)',borderColor:'#facc15'}]},options:{plugins:{legend:{display:false}},scales:{x:{ticks:{color:'#111'}},y:{ticks:{color:'#111'}}}}); await new Promise(r=>setTimeout(r,100)); const chartImg=ch.toBase64Image(); ch.destroy(); cvs.remove(); const html=`<!doctype html><html><head><meta charset='utf-8'><title>Reporte mensual ${st.name}</title><style>body{font-family:Inter,Arial,sans-serif;padding:24px;color:#111} h1{margin:0 0 4px} .muted{color:#555} table{width:100%;border-collapse:collapse;margin-top:12px} th,td{border:1px solid #ddd;padding:8px;font-size:12px} th{background:#f3f4f6;text-align:left} .k{display:flex;gap:12px;margin:10px 0} .pill{padding:4px 8px;border-radius:999px;background:#f3f4f6;font-size:12px} .brand{display:flex;align-items:center;gap:10px;margin-bottom:10px} .logo{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,#facc15,#fff176);display:grid;place-items:center;color:#111;font-weight:900} @media print{.no-print{display:none}}</style></head><body><div class='brand'><div class='logo'>FT</div><div><h1>${BRAND_NAME} — Reporte mensual</h1><div class='muted'>Sistema intuitivo de seguimiento y evolución del peso</div></div></div><div class='muted'>Alumno: <b>${st.name}</b></div><div class='k'><div class='pill'>Altura usada IMC: ${latestHeight()??'—'} cm</div><div class='pill'>Objetivo: ${st.target??'—'} kg</div></div><img src='${chartImg}' style='max-width:100%;margin:10px 0'><table><thead><tr><th>Mes</th><th>Peso medio</th><th>% Grasa media</th><th>% Músculo medio</th><th>Peso inicio</th><th>Peso fin</th><th>Cambio</th></tr></thead><tbody>${monthly.map(r=>`<tr><td>${r.month}</td><td>${r.avgWeight?.toFixed(1)??''}</td><td>${r.avgFat?.toFixed(1)??''}</td><td>${r.avgMuscle?.toFixed(1)??''}</td><td>${r.start??''}</td><td>${r.end??''}</td><td>${r.change>0?'+':''}${(r.change??'').toFixed?r.change.toFixed(1):''}</td></tr>`).join('')}</tbody></table><p class='muted'>Generado automáticamente — ${BRAND_NAME}</p><button class='no-print' onclick='window.print()'>Imprimir/Guardar PDF</button></body></html>`; const w=window.open('', '_blank'); w.document.write(html); w.document.close(); }
-
-  // —— Modo alumno (solo lectura) ——
-  function applyStudentMode(){ const params=new URLSearchParams(location.search); if(params.get('mode')!=='alumno') return; ['#btnNewStudent','#studentForm','#btnAddLog','#btnDeleteLog','#fileImport','#btnExport','#btnExportJSON','#btnTpl','#btnMonthlyReport','#btnAddHeight','#btnDeleteHeight','#btnAddStg','#btnDeleteStg'].forEach(s=>{ const el=document.querySelector(s); if(el)(el.closest('button,label,div')||el).style.display='none'; }); const n=params.get('n'); if(n){ const m=students.find(s=>s.name.toLowerCase()===decodeURIComponent(n).toLowerCase()); if(m){ selectedId=m.id; const sel=$('#studentSelect'); if(sel){ sel.value=selectedId; sel.disabled=true; } renderAll(); } } $$('#logsTable input[type="checkbox"],#heightTable input[type="checkbox"],#stgTable input[type="checkbox"]').forEach(x=>x.disabled=true); }
-
-  // —— Seed demo ——
-  function seedIfEmpty(){ if(students.length) return; const a={id:uid(), name:'Alumno Demo', height:170, start:78, target:70, notes:'Ejemplo'}; students.push(a); logs[a.id]=[{date:'2025-10-01', weight:78, fat:25.5, muscle:34.0},{date:'2025-10-08', weight:77.1, fat:25.1, muscle:34.3},{date:'2025-10-15', weight:76.6, fat:24.7, muscle:34.5},{date:'2025-10-22', weight:76.0, fat:24.2, muscle:34.9},{date:'2025-11-05', weight:75.2, fat:23.9, muscle:35.1},{date:'2025-11-19', weight:74.9, fat:23.6, muscle:35.3},]; heights[a.id]=[{date:'2025-10-01',height:170}]; strength[a.id]=[{date:'2025-11-10',exercise:'Sentadilla',weight:85,reps:5,epley:Math.round(85*(1+5/30)*10)/10},{date:'2025-11-17',exercise:'Press banca',weight:70,reps:5,epley:Math.round(70*(1+5/30)*10)/10},]; persist(); }
-
-  init();
-</script>
 </body>
 </html>
