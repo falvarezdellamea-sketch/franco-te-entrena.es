@@ -2,136 +2,135 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Franco te entrena - Dashboard</title>
+  <title>Franco te entrena - Seguimiento alumnos (Simple)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #000000;
-      color: #ffffff;
-    }
-    header {
-      background-color: #FFD700;
-      color: black;
-      padding: 10px;
-      text-align: center;
-    }
-    .logo {
-      width: 80px;
-      margin-bottom: 5px;
+      font-family: Arial, sans-serif;
+      background:#f5f5f5;
+      margin:0;
+      padding:20px;
     }
     h1 {
-      margin: 0;
-      font-size: 24px;
+      text-align:center;
+      color:#333;
     }
-    .container {
-      padding: 20px;
+    .card {
+      background:white;
+      padding:16px;
+      border-radius:10px;
+      box-shadow:0 2px 6px rgba(0,0,0,0.15);
+      max-width:600px;
+      margin:20px auto;
     }
-    .section {
-      background-color: #1a1a1a;
-      padding: 15px;
-      margin-bottom: 20px;
-      border-radius: 8px;
-    }
-    label, input, select, button {
-      display: block;
-      margin: 8px 0;
-    }
-    input, select {
-      padding: 6px;
-      width: 100%;
-      max-width: 300px;
+    label { font-weight:bold; display:block; margin-top:10px; }
+    input {
+      width:100%;
+      padding:8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+      margin-top:4px;
     }
     button {
-      background-color: #FFD700;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-weight: bold;
+      width:100%;
+      padding:10px;
+      background:#fdd835;
+      border:none;
+      border-radius:6px;
+      margin-top:15px;
+      font-weight:bold;
+      cursor:pointer;
     }
+    button:hover { background:#fbc02d; }
     table {
-      margin-top: 15px;
-      width: 100%;
-      border-collapse: collapse;
+      width:100%;
+      border-collapse:collapse;
+      margin-top:15px;
     }
-    th, td {
-      padding: 8px;
-      border: 1px solid #333;
-      text-align: center;
+    th,td {
+      border:1px solid #ddd;
+      padding:8px;
+      text-align:left;
     }
+    th { background:#eee; }
   </style>
 </head>
 <body>
 
-  <header>
-    <img src="logo nuevo original.png" alt="Logo Franco Te Entrena" class="logo"/>
-    <h1>Franco te entrena</h1>
-    <p style="margin-top: 0;">Transforma tu vida</p>
-  </header>
+<h1>Franco te entrena - Control simple</h1>
 
-  <div class="container">
+<div class="card">
+  <h2>Registrar alumno</h2>
+  <label>Nombre</label>
+  <input id="nombre" type="text">
 
-    <!-- Registro de altura -->
-    <div class="section">
-      <h2>📏 Registro de altura</h2>
-      <label for="fechaAltura">Fecha:</label>
-      <input type="date" id="fechaAltura" />
-      <label for="altura">Altura (cm):</label>
-      <input type="number" id="altura" placeholder="Ej: 170" />
-      <button onclick="guardarAltura()">Guardar altura</button>
-      <table id="tablaAltura">
-        <tr><th>Fecha</th><th>Altura (cm)</th></tr>
-      </table>
-    </div>
+  <label>Altura (m)</label>
+  <input id="altura" type="number" step="0.01">
 
-    <!-- Registro de fuerza -->
-    <div class="section">
-      <h2>🏋️‍♂️ Registro de fuerza</h2>
-      <label for="fechaFuerza">Fecha:</label>
-      <input type="date" id="fechaFuerza" />
-      <label for="ejercicio">Ejercicio:</label>
-      <input type="text" id="ejercicio" placeholder="Ej: Sentadilla" />
-      <label for="carga">Carga (kg):</label>
-      <input type="number" id="carga" />
-      <label for="reps">Repeticiones:</label>
-      <input type="number" id="reps" />
-      <button onclick="guardarFuerza()">Guardar fuerza</button>
-      <table id="tablaFuerza">
-        <tr><th>Fecha</th><th>Ejercicio</th><th>Carga</th><th>Reps</th><th>1RM (Epley)</th></tr>
-      </table>
-    </div>
-  </div>
+  <label>Peso (kg)</label>
+  <input id="peso" type="number" step="0.1">
 
-  <script>
-    const tablaAltura = document.getElementById("tablaAltura");
-    const tablaFuerza = document.getElementById("tablaFuerza");
+  <button onclick="guardarAlumno()">Guardar</button>
+</div>
 
-    function guardarAltura() {
-      const fecha = document.getElementById("fechaAltura").value;
-      const altura = document.getElementById("altura").value;
-      if (!fecha || !altura) return alert("Completa ambos campos");
-      const fila = tablaAltura.insertRow();
-      fila.innerHTML = `<td>${fecha}</td><td>${altura}</td>`;
-      document.getElementById("fechaAltura").value = '';
-      document.getElementById("altura").value = '';
-    }
+<div class="card">
+  <h2>Lista de alumnos</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Altura</th>
+        <th>Peso</th>
+        <th>IMC</th>
+      </tr>
+    </thead>
+    <tbody id="tabla"></tbody>
+  </table>
+</div>
+<script>
+let alumnos = JSON.parse(localStorage.getItem("alumnos") || "[]");
 
-    function guardarFuerza() {
-      const fecha = document.getElementById("fechaFuerza").value;
-      const ejercicio = document.getElementById("ejercicio").value;
-      const carga = parseFloat(document.getElementById("carga").value);
-      const reps = parseInt(document.getElementById("reps").value);
-      if (!fecha || !ejercicio || isNaN(carga) || isNaN(reps)) return alert("Completa todos los campos");
-      const epley = Math.round(carga * (1 + reps / 30));
-      const fila = tablaFuerza.insertRow();
-      fila.innerHTML = `<td>${fecha}</td><td>${ejercicio}</td><td>${carga}</td><td>${reps}</td><td>${epley}</td>`;
-      document.getElementById("fechaFuerza").value = '';
-      document.getElementById("ejercicio").value = '';
-      document.getElementById("carga").value = '';
-      document.getElementById("reps").value = '';
-    }
-  </script>
+function calcularIMC(peso, altura) {
+  if (!peso || !altura) return "";
+  return (peso / (altura * altura)).toFixed(1);
+}
 
+function render() {
+  let html = "";
+  alumnos.forEach(a => {
+    html += `
+      <tr>
+        <td>${a.nombre}</td>
+        <td>${a.altura}</td>
+        <td>${a.peso}</td>
+        <td>${calcularIMC(a.peso, a.altura)}</td>
+      </tr>
+    `;
+  });
+  document.getElementById("tabla").innerHTML = html;
+}
+
+function guardarAlumno() {
+  const nombre = document.getElementById("nombre").value;
+  const altura = parseFloat(document.getElementById("altura").value);
+  const peso = parseFloat(document.getElementById("peso").value);
+
+  if (!nombre || !altura || !peso) {
+    alert("Completa todos los datos.");
+    return;
+  }
+
+  alumnos.push({ nombre, altura, peso });
+  localStorage.setItem("alumnos", JSON.stringify(alumnos));
+  render();
+  alert("Alumno guardado.");
+
+  document.getElementById("nombre").value = "";
+  document.getElementById("altura").value = "";
+  document.getElementById("peso").value = "";
+}
+
+render();
+</script>
 </body>
 </html>
